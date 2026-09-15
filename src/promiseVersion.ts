@@ -6,8 +6,8 @@ import { resolve } from "node:path";
 const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=-29.86&longitude=31.02&current_weather=true`;
 const newsUrl = `https://dummyjson.com/posts/1`;
 
-function getData(url: string): Promise<any> {
-  console.log("Fetching data...");
+function getData(url: string, typeData: string): Promise<any> {
+  console.log(`Fetching ${typeData} data...`);
 
   return new Promise((resolve, reject) => {
     https
@@ -33,10 +33,16 @@ function getData(url: string): Promise<any> {
   });
 }
 
-getData(weatherUrl)
+getData(weatherUrl, "weather")
   .then((data) => {
     console.log("Weather data received successfully:");
     console.log(data.current_weather);
+
+    return getData(newsUrl, "news");
+  })
+  .then((newsData) => {
+    console.log("News data received successfully");
+    console.log(newsData);
   })
   .catch((error) => {
     console.error("Error fetching data: ", error.message);
