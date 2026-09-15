@@ -1,15 +1,11 @@
-import { rejects } from "node:assert";
-import { error } from "node:console";
 import https from "node:https";
-import { resolve } from "node:path";
 
 const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=-29.86&longitude=31.02&current_weather=true`;
 const newsUrl = `https://dummyjson.com/posts/1`;
 
 function getData(url: string, typeData: string): Promise<any> {
-  console.log(`Fetching ${typeData} data...`);
-
   return new Promise((resolve, reject) => {
+    console.log(`Fetching ${typeData} data...`);
     https
       .get(url, (response) => {
         let data = "";
@@ -20,7 +16,6 @@ function getData(url: string, typeData: string): Promise<any> {
 
         response.on("end", () => {
           try {
-            console.log("Data parsed successfully...");
             resolve(JSON.parse(data));
           } catch (error) {
             reject(new Error("Failed to parse JSON response"));
@@ -35,7 +30,8 @@ function getData(url: string, typeData: string): Promise<any> {
 
 getData(weatherUrl, "weather")
   .then((data) => {
-    console.log("Weather data received successfully:");
+    console.log("================ promiseVersion chaining =============");
+    console.log("\nWeather data received successfully:");
     console.log(data.current_weather);
 
     return getData(newsUrl, "news");
@@ -47,3 +43,17 @@ getData(weatherUrl, "weather")
   .catch((error) => {
     console.error("Error fetching data: ", error.message);
   });
+
+Promise.all([getData(weatherUrl, "weather"), getData(newsUrl, "news")]).then(
+  ([weatherData, newsData]) => {
+    console.log("================ Promise all ==================");
+    console.log("\nAll data received successfully!");
+
+    console.log("\n Weather data :");
+    console.log(weatherData.current_weather);
+
+    console.log("\nNews data:");
+    console.log(newsData.title);
+    console.log(newsData.body);
+  },
+);
