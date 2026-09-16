@@ -1,8 +1,16 @@
-const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=-29.86&longitude=31.02&current_weather=`;
-const newsUrl = `https://dummyjson.com/posts/1`;
+import * as dotenv from "dotenv";
 
-function fetchData(url: string, callback: (data: any) => void): void {
-  console.log(`Fetching data..`);
+dotenv.config();
+
+const weatherUrl = process.env.WEATHER_URL!;
+const newsUrl = process.env.NEWS_URL!;
+
+function fetchData(
+  url: string,
+  data: string,
+  callback: (data: any) => void,
+): void {
+  console.log(`Fetching ${data} data..`);
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -11,10 +19,10 @@ function fetchData(url: string, callback: (data: any) => void): void {
     .catch((error) => console.error("Error:", error));
 }
 
-fetchData(weatherUrl, (weatherData) => {
+fetchData(weatherUrl, "weather", (weatherData) => {
   console.log("Displaying weather response.. \n", weatherData);
 
-  fetchData(newsUrl, (newsData) => {
+  fetchData(newsUrl, "news", (newsData) => {
     console.log("\n Displaying news response.. \n", newsData);
   });
 });

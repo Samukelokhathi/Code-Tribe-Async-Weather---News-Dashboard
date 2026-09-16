@@ -1,5 +1,9 @@
-const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=-29.86&longitude=31.02&current_weather=true`;
-const newsUrl = `https://dummyjson.com/posts/1`;
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
+const weatherUrl = process.env.WEATHER_URL!;
+const newsUrl = process.env.NEWS_URL!;
 
 async function fetchWeatherData() {
   try {
