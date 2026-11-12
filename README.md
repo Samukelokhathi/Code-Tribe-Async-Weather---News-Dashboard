@@ -13,7 +13,11 @@ This project was built as part of my CodeTribe learning journey to strengthen my
 
 ### Clone the Repository
 
+
+
 ```bash
+To avoid CLI errors use Bash terminal
+
 git clone https://github.com/Samukelokhathi/Code-Tribe-Async-Weather---News-Dashboard.git
 ```
 
