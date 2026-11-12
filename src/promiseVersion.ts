@@ -55,8 +55,8 @@ getData(weatherUrl, "weather")
   })
   .then((newsData) => {
     console.log("\nNews data:");
-    console.log(newsData.title);
-    console.log(newsData.body);
+    console.log(newsData);
+    console.log(newsData);
   })
   .catch((error) => {
     console.error("Error fetching data: ", error.message);
